@@ -1,6 +1,6 @@
 # react-with-dimension
 
-Simple React high order function to expose when the component dimension.
+Simple React high order function to expose the component dimension.
 
 ## Usage
 
