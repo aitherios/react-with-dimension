@@ -12,6 +12,7 @@ const withDimension = ({
   }),
   getHeight = ((elem) => elem.getBoundingClientRect().height),
   getWidth = ((elem) => elem.getBoundingClientRect().width),
+  wait = 200,
 } = {}) => (BaseComponent) => class extends Component {
   static displayName = wrapDisplayName(BaseComponent, 'withDimension')
 
@@ -34,7 +35,7 @@ const withDimension = ({
   }
 
   handleResize() {
-    return window.requestAnimationFrame(() => throttle(this.updateDimensions, 200))
+    return window.requestAnimationFrame(() => throttle(this.updateDimensions, wait))
   }
 
   updateDimensions() {
