@@ -1,6 +1,6 @@
 # react-with-dimension
 
-Simple React high order function to expose the component dimension.
+Debounced React high order component to expose container width and height.
 
 ## Usage
 
