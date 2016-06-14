@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import wrapDisplayName from 'recompose/wrapDisplayName'
-import throttle from 'lodash.throttle'
+import debounce from 'lodash.debounce'
 
 const withDimension = ({
   transform = ((width, height) => ({ containerWidth: width, containerHeight: height })),
@@ -23,28 +23,33 @@ const withDimension = ({
 
   componentDidMount() {
     if (window && window.addEventListener) {
+      this.debouncedUpdate = debounce(this.updateDimensions, wait)
       this.updateDimensions()
-      window.addEventListener('resize', this.handleResize)
+      window.addEventListener('resize', this.debouncedUpdate)
     }
   }
 
   componentWillUnmount() {
     if (window && window.removeEventListener) {
-      window.removeEventListener('resize', this.handleResize)
+      window.removeEventListener('resize', this.debouncedUpdate)
     }
   }
 
-  handleResize() {
-    return window.requestAnimationFrame(() => throttle(this.updateDimensions, wait))
-  }
+  updateDimensions = () => {
+    const update = () => {
+      const elem = this.refs.withDimensionContainer
 
-  updateDimensions() {
-    const elem = this.refs.withDimensionContainer
+      this.setState({
+        containerWidth: getWidth(elem),
+        containerHeight: getHeight(elem),
+      })
+    }
 
-    this.setState({
-      containerWidth: getWidth(elem),
-      containerHeight: getHeight(elem),
-    })
+    if (window.requestAnimationFrame) {
+      window.requestAnimationFrame(() => update())
+    } else {
+      update()
+    }
   }
 
   render() {
