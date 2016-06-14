@@ -1,7 +1,7 @@
 {
   "name": "react-with-dimension",
   "version": "1.0.0",
-  "description": "Simple dimension high order function.",
+  "description": "Simple React high order function to expose the component dimension.",
   "main": "dist/index.js",
   "scripts": {
     "test": "jest",
