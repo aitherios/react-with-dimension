@@ -1,4 +1,7 @@
 # react-with-dimension
+[![npm version](https://img.shields.io/npm/v/react-with-dimension.svg?style=flat-square)](https://www.npmjs.com/package/react-with-dimension)
+[![dependency status](https://img.shields.io/david/team-magneto/react-with-dimension.svg?style=flat-square)](https://david-dm.org/team-magneto/react-with-dimension)
+[![build status](https://img.shields.io/travis/team-magneto/react-with-dimension.svg?style=flat-square)](https://travis-ci.org/team-magneto/react-with-dimension)
 
 Debounced React high order component to expose container width and height.
 
