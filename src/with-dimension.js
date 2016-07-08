@@ -47,6 +47,7 @@ const withDimension = ({
 
   componentDidMount() {
     if (typeof window !== 'undefined' && window !== null && window.addEventListener) {
+      this.mounted = true
       this.debouncedUpdate = debounce(this.updateDimensions, wait)
       this.updateDimensions()
       window.addEventListener('resize', this.debouncedUpdate, { passive: true })
@@ -55,11 +56,14 @@ const withDimension = ({
 
   componentWillUnmount() {
     if (typeof window !== 'undefined' && window !== null && window.removeEventListener) {
+      this.mounted = false
       window.removeEventListener('resize', this.debouncedUpdate, { passive: true })
     }
   }
 
   updateDimensions = () => {
+    if (!this.mounted) { return }
+
     const update = () => {
       const elem = this.refs.withDimensionContainer
 
