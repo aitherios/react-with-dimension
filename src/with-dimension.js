@@ -3,17 +3,23 @@ import wrapDisplayName from 'recompose/wrapDisplayName'
 import debounce from 'lodash.debounce'
 
 const defaultGetHeight = (elem = {}) => {
-  if (elem.getBoundingClientRect) {
+  if (elem && elem.getBoundingClientRect) {
     return elem.getBoundingClientRect().height
   }
-  return elem.clientHeight
+  if (elem) {
+    return elem.clientHeight
+  }
+  return null
 }
 
 const defaultGetWidth = (elem = {}) => {
-  if (elem.getBoundingClientRect) {
+  if (elem && elem.getBoundingClientRect) {
     return elem.getBoundingClientRect().width
   }
-  return elem.clientWidth
+  if (elem) {
+    return elem.clientWidth
+  }
+  return null
 }
 
 const defaultTransform = (width, height) => ({ containerWidth: width, containerHeight: height })
