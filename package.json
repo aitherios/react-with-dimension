@@ -1,6 +1,6 @@
 {
   "name": "react-with-dimension",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Debounced React high order component to expose container width and height.",
   "main": "dist/index.js",
   "scripts": {
