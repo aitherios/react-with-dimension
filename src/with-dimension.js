@@ -43,13 +43,13 @@ const withDimension = ({
     if (typeof window !== 'undefined' && window !== null && window.addEventListener) {
       this.debouncedUpdate = debounce(this.updateDimensions, wait)
       this.updateDimensions()
-      window.addEventListener('resize', this.debouncedUpdate)
+      window.addEventListener('resize', this.debouncedUpdate, { passive: true })
     }
   }
 
   componentWillUnmount() {
     if (typeof window !== 'undefined' && window !== null && window.removeEventListener) {
-      window.removeEventListener('resize', this.debouncedUpdate)
+      window.removeEventListener('resize', this.debouncedUpdate, { passive: true })
     }
   }
 
