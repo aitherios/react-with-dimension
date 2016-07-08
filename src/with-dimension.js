@@ -40,7 +40,7 @@ const withDimension = ({
   }
 
   componentDidMount() {
-    if (window && window.addEventListener) {
+    if (typeof window !== 'undefined' && window !== null && window.addEventListener) {
       this.debouncedUpdate = debounce(this.updateDimensions, wait)
       this.updateDimensions()
       window.addEventListener('resize', this.debouncedUpdate)
@@ -48,7 +48,7 @@ const withDimension = ({
   }
 
   componentWillUnmount() {
-    if (window && window.removeEventListener) {
+    if (typeof window !== 'undefined' && window !== null && window.removeEventListener) {
       window.removeEventListener('resize', this.debouncedUpdate)
     }
   }
@@ -63,7 +63,7 @@ const withDimension = ({
       })
     }
 
-    if (window.requestAnimationFrame) {
+    if (typeof window !== 'undefined' && window !== null && window.requestAnimationFrame) {
       window.requestAnimationFrame(() => update())
     } else {
       update()
