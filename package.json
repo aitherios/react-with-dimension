@@ -22,7 +22,7 @@
     "inline-style",
     "high-order-component"
   ],
-  "author": "Team Magneto",
+  "author": "Renan Mendes Carvalho <aitherios@gmail.com> (https://github.com/aitherios)",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/team-767/react-with-dimension/issues"
@@ -86,5 +86,11 @@
       "semi": 0,
       "new-cap": 0
     }
-  }
+  },
+  "maintainers": [
+    "Renan Mendes Carvalho <aitherios@gmail.com> (https://github.com/aitherios)"
+  ],
+  "contributors": [
+    "Renan Mendes Carvalho <aitherios@gmail.com> (https://github.com/aitherios)"
+  ]
 }
