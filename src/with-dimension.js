@@ -9,7 +9,7 @@ const defaultGetHeight = (elem = {}) => {
   if (elem && elem.getBoundingClientRect) {
     return elem.getBoundingClientRect().height
   }
-  return null
+  return undefined
 }
 
 const defaultGetWidth = (elem = {}) => {
@@ -19,7 +19,7 @@ const defaultGetWidth = (elem = {}) => {
   if (elem && elem.getBoundingClientRect) {
     return elem.getBoundingClientRect().width
   }
-  return null
+  return undefined
 }
 
 const defaultTransform = (width, height) => ({ containerWidth: width, containerHeight: height })
