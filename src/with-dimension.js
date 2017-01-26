@@ -3,21 +3,21 @@ import wrapDisplayName from 'recompose/wrapDisplayName'
 import debounce from 'lodash.debounce'
 
 const defaultGetHeight = (elem = {}) => {
+  if (elem && elem.clientHeight) {
+    return elem.clientHeight
+  }
   if (elem && elem.getBoundingClientRect) {
     return elem.getBoundingClientRect().height
-  }
-  if (elem) {
-    return elem.clientHeight
   }
   return null
 }
 
 const defaultGetWidth = (elem = {}) => {
+  if (elem && elem.clientWidth) {
+    return elem.clientWidth
+  }
   if (elem && elem.getBoundingClientRect) {
     return elem.getBoundingClientRect().width
-  }
-  if (elem) {
-    return elem.clientWidth
   }
   return null
 }
@@ -31,12 +31,19 @@ const defaultContainerStyle = {
   border: 0,
 }
 
+const defaultDebounceOptions = {
+  leading: false,
+  trailing: true,
+  maxWait: 800,
+}
+
 const withDimension = ({
   transform = defaultTransform,
   containerStyle = defaultContainerStyle,
   getHeight = defaultGetHeight,
   getWidth = defaultGetWidth,
   wait = 200,
+  debounceOptions = defaultDebounceOptions,
 } = {}) => (BaseComponent) => class extends Component {
   static displayName = wrapDisplayName(BaseComponent, 'withDimension')
 
@@ -48,9 +55,15 @@ const withDimension = ({
   componentDidMount() {
     if (typeof window !== 'undefined' && window !== null && window.addEventListener) {
       this.canUpdate = true
-      this.debouncedUpdate = debounce(this.updateDimensions, wait)
-      this.updateDimensions()
+      this.debouncedUpdate = debounce(this.updateDimensions, wait, debounceOptions)
       window.addEventListener('resize', this.debouncedUpdate, { passive: true })
+      this.debouncedUpdate()
+    }
+  }
+
+  componentDidUpdate() {
+    if (this.debouncedUpdate) {
+      this.debouncedUpdate()
     }
   }
 
@@ -61,22 +74,25 @@ const withDimension = ({
     }
   }
 
+  update = (elem) => {
+    this.setState({
+      containerWidth: getWidth(elem),
+      containerHeight: getHeight(elem),
+    })
+  }
+
   updateDimensions = () => {
-    const update = () => {
-      if (!this.canUpdate) { return }
+    const elem = this.refs.withDimensionContainer
 
-      const elem = this.refs.withDimensionContainer
-
-      this.setState({
-        containerWidth: getWidth(elem),
-        containerHeight: getHeight(elem),
-      })
-    }
+    if (!this.canUpdate) { return }
+    if (this.state.containerWidth === getWidth(elem)
+      && this.state.containerHeight === getHeight(elem)
+    ) { return }
 
     if (typeof window !== 'undefined' && window !== null && window.requestAnimationFrame) {
-      window.requestAnimationFrame(() => update())
+      window.requestAnimationFrame(() => this.update(elem))
     } else {
-      update()
+      this.update(elem)
     }
   }
 

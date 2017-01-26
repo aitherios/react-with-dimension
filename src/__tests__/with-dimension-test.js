@@ -1,4 +1,5 @@
 jest.unmock('../with-dimension')
+jest.mock('lodash.debounce', () => ((param) => param))
 
 import React from 'react'
 import WithDimension from '../with-dimension'
