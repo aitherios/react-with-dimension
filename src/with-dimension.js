@@ -82,7 +82,7 @@ const withDimension = ({
   }
 
   updateDimensions = () => {
-    const elem = this.refs.withDimensionContainer
+    const elem = this.withDimensionContainer
 
     if (!this.canUpdate) { return }
     if (this.state.containerWidth === getWidth(elem)
@@ -96,10 +96,14 @@ const withDimension = ({
     }
   }
 
+  updateWithDimensionContainerRef = (node) => {
+    this.withDimensionContainer = node
+  }
+
   render() {
     return (
       <div
-        ref={'withDimensionContainer'}
+        ref={this.updateWithDimensionContainerRef}
         style={containerStyle}
       >
         <BaseComponent
